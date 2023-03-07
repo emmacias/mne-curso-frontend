@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12 mt-5 mb-5">
+            <div class="container-fluid p-0">
+                <div class="row">
+                    <div class="col">
+                        <div class="d-grid gap-2 col-12 mx-auto">
+                            <button class="btn btn-primary" type="button">Tipo de recarga</button>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="d-grid gap-2 col-12 mx-auto">
+                            <button class="btn btn-primary" type="button">Datos de recarga</button>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="d-grid gap-2 col-12 mx-auto">
+                            <button class="btn btn-primary" type="button">Pago</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="tab == 1" class="tab1 col-12 mt-5">
+            <div *ngFor="let producto of productos" class="producto">
+                <a (click)="seleccionarProducto(producto)" href="javascript:;">
+                    <img [src]="producto.imagen">
+                </a>
+            </div>
+        </div>
+        
+        <div *ngIf="tab == 2" class="tab2 col-12">
+            <div class="container-fluid p-0">
+                <div class="row">
+                    <div class="col">
+                        <img [src]="productoSeleccionado?.imagen" alt="">
+                    </div>
+                    <div class="col">
+                        <div *ngFor="let campo of campos">
+                            {{ campo.etiqueta }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
