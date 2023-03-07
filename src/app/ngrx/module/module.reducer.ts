@@ -14,7 +14,10 @@ export const initialState: State = {
         count: undefined,
         campos: undefined
     },
-    item: {}
+    item: {
+        object: undefined,
+        formData: undefined
+    }
 }
 
 const moduleReducer = createReducer(
@@ -26,7 +29,6 @@ const moduleReducer = createReducer(
     on(IndexActions.SetItemsAction, (state,  { items }) => ({ ...state, index: { ...state.index, items } })),
     on(IndexActions.SetItemsPagAction, (state,  { items, count }) => ({ ...state, index: { ...state.index, items, count } })),
     on(IndexActions.DeleteItemsAction, (state, { modulo, ids }) => ({ ...state })),
-
     on(IndexActions.GetCamposAction, (state, { itemId }) => ({ ...state })),
     on(IndexActions.SetCamposAction, (state,  { campos }) => ({ ...state, index: { ...state.index, campos } })),
     // ITEM
@@ -35,6 +37,8 @@ const moduleReducer = createReducer(
     on(ItemActions.SetObjectAction, (state, { object }) => ({ ...state, item: { ...state.item, object } })),
     on(ItemActions.PostAction, (state, { object, modulo }) => ({ ...state })),
     on(ItemActions.PutAction, (state, { id, object, modulo }) => ({ ...state })),
+    on(ItemActions.GetFormDataAction, (state, { id, modulo }) => ({ ...state })),
+    on(ItemActions.SetFormDataAction, (state, { formData }) => ({ ...state, item: { ...state.item, formData } })),
 );
 
 export function reducer(state: State | undefined, action: Action) {

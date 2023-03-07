@@ -17,3 +17,11 @@ export const PostAction = createAction('[ITEM] SET POST',
 export const PutAction = createAction('[ITEM] SET PUT',
   props<{ id: number, object: any, modulo: string }>()
 );
+
+export const GetFormDataAction = createAction('[ITEM] GET FORM DATA',
+  props<{ id: number, modulo: string }>()
+);
+
+export const SetFormDataAction = createAction('[ITEM] SET FORM DATA',
+  props<{ formData: any }>()
+);

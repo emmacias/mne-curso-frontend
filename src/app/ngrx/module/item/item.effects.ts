@@ -36,4 +36,12 @@ export class ItemEfects {
             this.httpService.Put(action.modulo, action.id, action.object).pipe(
             map((res: any) => IndexActions.GetItemsPagAction({ modulo: action.modulo, cantidad: 10, pagina: 0, textBusqueda: '' }))
     ))));
+
+    GetFormDataAction$ = createEffect(() =>
+        this.actions$.pipe(
+        ofType(ItemActions.GetFormDataAction),
+        mergeMap((action) =>
+            this.httpService.GetFormData(action.id, action.modulo).pipe(
+            map((res: any) => ItemActions.SetFormDataAction({ formData: res.datos }))
+    ))));
 }

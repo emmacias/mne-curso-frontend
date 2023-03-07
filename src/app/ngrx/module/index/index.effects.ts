@@ -25,7 +25,7 @@ export class IndexEfects {
             ofType(IndexActions.GetItemsPagAction),
             mergeMap((action: any) => 
                 this.httpService.Gets(action.modulo, action.cantidad, action.pagina, action.textBusqueda).pipe(
-                    map((resp: any) => IndexActions.SetItemsPagAction({ items: resp.datos.elementos, count: resp.cantidadTotal }))
+                    map((resp: any) => IndexActions.SetItemsPagAction({ items: resp.datos.elementos, count: resp.datos.cantidadTotal }))
                 ))));
 
     DeleteItemsAction$ = createEffect(() =>

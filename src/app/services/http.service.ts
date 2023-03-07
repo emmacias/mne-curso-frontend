@@ -59,4 +59,12 @@ export class HttpService {
     
         return this.httpClient.delete(`${this.rutaBase}/${rutaEspecifica}`, options);
     }
+
+    GetFormData(id: number, rutaEspecifica: string) {
+        if (id) {
+          return this.httpClient.get(`${this.rutaBase}/${rutaEspecifica}/get-form-data?id=${id}`);
+        }
+    
+        return this.httpClient.get(`${this.rutaBase}/${rutaEspecifica}/get-form-data`);
+    }
 }

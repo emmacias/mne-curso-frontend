@@ -11,6 +11,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { appReducer, metaReducers } from './ngrx/app.reducer';
 import { extDevtoolsModules } from './ngrx/store.devtools';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 const NGRX_IMPORTS = [
@@ -30,7 +31,8 @@ const NGRX_IMPORTS = [
     RouterModule,
     RecargasModule,
     HttpClientModule,
-    ...NGRX_IMPORTS
+    ...NGRX_IMPORTS,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

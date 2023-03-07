@@ -1,1 +1,74 @@
-<p>index works!</p>
+<mat-toolbar class="acciones-toolbar">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <button (click)="crearItem()" mat-raised-button color="primary" class="my-2">
+                    <mat-icon>add_circle_outline</mat-icon>
+                    Crear
+                </button>
+
+                <button (click)="eliminar()" mat-raised-button color="accent" class="m-2">
+                    <mat-icon>delete</mat-icon>
+                    Eliminar
+                </button>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="input-busqueda">
+                    <mat-label>Buscar</mat-label>
+                    <input [(ngModel)]="textoBusqueda" (keyup.enter)="obtenerItems()" matInput>
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</mat-toolbar>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <div class="mat-elevation-z8 table-index my-3">
+                <table mat-table [dataSource]="dataSource" class="list-item">
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox (change)="$event ? seleccionarTodo() : null" [checked]="selection.hasValue() && estanTodosSeleccionados()" [indeterminate]="selection.hasValue() && !estanTodosSeleccionados()" ripple>
+                            </mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let row" (click)="$event.stopPropagation(); seleccionar(row);" class="checkSelect">
+                            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? seleccionar(row) : null" [checked]="selection.isSelected(row)">
+                            </mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="fechaAcreditacion">
+                        <th mat-header-cell *matHeaderCellDef> Fecha </th>
+                        <td mat-cell *matCellDef="let element"> {{element.fechaAcreditacion | date:'dd/MM/yyyy HH:mm'}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="valor">
+                        <th mat-header-cell *matHeaderCellDef> Valor </th>
+                        <td mat-cell *matCellDef="let element"> {{element.valor?.toFixed(2)}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="formaPago">
+                        <th mat-header-cell *matHeaderCellDef> Forma Pago </th>
+                        <td mat-cell *matCellDef="let element"> {{element.formaPago.nombre}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="mostrarItem(row.id)"></tr>
+
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+                            <div class="mensaje-no-existen-datos">
+                                <mat-icon class="mx-2">error</mat-icon> No existen datos para mostrar.
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <mat-paginator [length]="cantidadTotal" [pageSize]="cantidadPorPagina" [pageSizeOptions]="pageSizeOptions" [pageIndex]="numeroDePagina" [showFirstLastButtons]="true" (page)="cambiarPagina($event)">
+                </mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>
