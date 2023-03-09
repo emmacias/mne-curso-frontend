@@ -40,19 +40,19 @@
                         </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="fechaAcreditacion">
-                        <th mat-header-cell *matHeaderCellDef> Fecha </th>
-                        <td mat-cell *matCellDef="let element"> {{element.fechaAcreditacion | date:'dd/MM/yyyy HH:mm'}} </td>
+                    <ng-container matColumnDef="nombre">
+                        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                        <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="valor">
-                        <th mat-header-cell *matHeaderCellDef> Valor </th>
-                        <td mat-cell *matCellDef="let element"> {{element.valor?.toFixed(2)}} </td>
+                    <ng-container matColumnDef="bloqueado">
+                        <th mat-header-cell *matHeaderCellDef> Bloqueado </th>
+                        <td mat-cell *matCellDef="let element"> {{element.bloqueado}} </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="formaPago">
-                        <th mat-header-cell *matHeaderCellDef> Forma Pago </th>
-                        <td mat-cell *matCellDef="let element"> {{element.formaPago.nombre}} </td>
+                    <ng-container matColumnDef="urlServicios">
+                        <th mat-header-cell *matHeaderCellDef> URL servicio </th>
+                        <td mat-cell *matCellDef="let element"> {{element.urlServicios}} </td>
                     </ng-container>
 
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

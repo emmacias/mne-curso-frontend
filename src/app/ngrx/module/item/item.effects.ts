@@ -4,13 +4,16 @@ import { map, mergeMap } from "rxjs";
 import { HttpService } from "src/app/services/http.service";
 import * as ItemActions from './item.actions';
 import * as IndexActions from '../index/index.actions';
+import * as GlobalActions from '../../global/global.actions';
+import { Store } from "@ngrx/store";
 
 @Injectable()
 export class ItemEfects {
 
     constructor(
         private actions$: Actions,
-        private httpService: HttpService
+        private httpService: HttpService,
+        private store: Store<any>
     ) { }
 
     GetObjectAction$ = createEffect(() =>
@@ -26,7 +29,13 @@ export class ItemEfects {
         ofType(ItemActions.PostAction),
         mergeMap((action) =>
             this.httpService.Post(action.modulo, action.object).pipe(
-            map((res: any) => IndexActions.GetItemsPagAction({ modulo: action.modulo, cantidad: 10, pagina: 0, textBusqueda: '' }))
+            map((res: any) => {
+                if (action.modulo == 'acreditacion') {
+                    this.store.dispatch(GlobalActions.GetSaldoAction());
+                }
+
+                return IndexActions.GetItemsPagAction({ modulo: action.modulo, cantidad: 10, pagina: 0, textBusqueda: '' });
+            })
     ))));
 
     PutAction$ = createEffect(() =>
@@ -34,7 +43,13 @@ export class ItemEfects {
         ofType(ItemActions.PutAction),
         mergeMap((action) =>
             this.httpService.Put(action.modulo, action.id, action.object).pipe(
-            map((res: any) => IndexActions.GetItemsPagAction({ modulo: action.modulo, cantidad: 10, pagina: 0, textBusqueda: '' }))
+            map((res: any) => {
+                if (action.modulo == 'acreditacion') {
+                    this.store.dispatch(GlobalActions.GetSaldoAction());
+                }
+                
+                return IndexActions.GetItemsPagAction({ modulo: action.modulo, cantidad: 10, pagina: 0, textBusqueda: '' });
+            })
     ))));
 
     GetFormDataAction$ = createEffect(() =>

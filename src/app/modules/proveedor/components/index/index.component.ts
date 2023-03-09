@@ -13,10 +13,10 @@ import { SelectionModel } from '@angular/cdk/collections';
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss']
 })
-export class IndexComponent implements OnInit, OnDestroy {
+export class IndexComponent  implements OnInit, OnDestroy {
 
-  acreditaciones: any[] = [];
-  acreditacionesSubscription: Subscription = new Subscription();
+  proveedores: any[] = [];
+  proveedoresSubscription: Subscription = new Subscription();
 
   displayedColumns: string[] = [];
   dataSource = new MatTableDataSource<any>([]);
@@ -36,28 +36,28 @@ export class IndexComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.acreditacionesSubscription = this.store.select((state) => state?.module?.index)
+    this.proveedoresSubscription = this.store.select((state) => state?.module?.index)
       .subscribe((index) => {
-        this.acreditaciones = index.items;
+        this.proveedores = index.items;
 
-        this.dataSource.data = this.acreditaciones;
+        this.dataSource.data = this.proveedores;
         this.cantidadTotal = index.count;
 
         this.selection = new SelectionModel<any>(true, []);
       });
 
-    this.displayedColumns = ['select', 'fechaAcreditacion', 'valor', 'formaPago'];
+    this.displayedColumns = ['select', 'nombre', 'bloqueado', 'urlServicios'];
 
     this.obtenerItems();
   }
 
   ngOnDestroy(): void {
-    this.acreditacionesSubscription.unsubscribe();
+    this.proveedoresSubscription.unsubscribe();
     this.store.dispatch(IndexActions.ClearStoreAction());
   }
 
   obtenerItems() {
-    this.store.dispatch(IndexActions.GetItemsPagAction({ modulo: 'acreditacion', cantidad: this.cantidadPorPagina, pagina: this.numeroDePagina, textBusqueda: this.textoBusqueda }));
+    this.store.dispatch(IndexActions.GetItemsPagAction({ modulo: 'proveedor', cantidad: this.cantidadPorPagina, pagina: this.numeroDePagina, textBusqueda: this.textoBusqueda }));
   }
 
   cambiarPagina(event: any) {
@@ -120,6 +120,6 @@ export class IndexComponent implements OnInit, OnDestroy {
       this.toastr.error('No ha seleccionado elementos para borrar.', 'Error');
     }
 
-    this.store.dispatch(IndexActions.DeleteItemsAction({ ids: itemsSelected, modulo: 'acreditacion' }));
+    this.store.dispatch(IndexActions.DeleteItemsAction({ ids: itemsSelected, modulo: 'proveedor' }));
   }
 }

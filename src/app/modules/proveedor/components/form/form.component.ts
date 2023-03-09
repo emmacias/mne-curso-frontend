@@ -17,9 +17,6 @@ export class FormComponent implements OnInit, OnDestroy {
 
   object: any;
   objectSubscription: Subscription = new Subscription();
-  
-  formData: any;
-  formDataSubscription: Subscription = new Subscription();
 
   formGroup!: FormGroup;
   @ViewChild('formRef') formRef!: FormGroupDirective;
@@ -35,17 +32,6 @@ export class FormComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.initForm();
 
-    this.formDataSubscription = this.store.select((state) => state?.module?.item?.formData)
-      .subscribe(formData => {
-        if (formData) {
-            this.formData = formData;
-
-            if (this.data.id) {
-              this.store.dispatch(itemActions.GetObjectAction({ id: this.data.id, modulo: 'acreditacion' }));
-            }
-        }
-      });
-
     this.objectSubscription = this.store.select((state) => state?.module?.item?.object)
       .subscribe(object => {
         if (object) {
@@ -54,26 +40,29 @@ export class FormComponent implements OnInit, OnDestroy {
         }
       });
 
-    this.store.dispatch(itemActions.GetFormDataAction({ id: this.data.id, modulo: 'acreditacion' }));
+    if (this.data.id) {
+      this.store.dispatch(itemActions.GetObjectAction({ id: this.data.id, modulo: 'proveedor' }));
+    }
   }
 
   ngOnDestroy(): void {
     this.objectSubscription.unsubscribe();
-    this.formDataSubscription.unsubscribe();
     this.store.dispatch(itemActions.ClearStoreAction());
   }
 
   initForm() {
     this.formGroup = this.fb.group({
-      valor:        [{ value: null, disabled: (this.data.tipo == 'VER' ? true : false) }, [Validators.required, BlankValidator]],
-      formaPagoId:  [{ value: null, disabled: (this.data.tipo == 'VER' ? true : false) }, [Validators.required]]
+      nombre:       [{ value: null, disabled: (this.data.tipo == 'VER' ? true : false) }, [Validators.required, BlankValidator]],
+      bloqueado:    [{ value: false, disabled: (this.data.tipo == 'VER' ? true : false) }, [Validators.required]],
+      urlServicios: [{ value: null, disabled: (this.data.tipo == 'VER' ? true : false) }, [Validators.required, BlankValidator]],
     });
   }
 
   cargarDatosForm() {
     this.formGroup.patchValue({
-      valor:       this.object ? this.object.valor.toFixed(2) : null,
-      formaPagoId: this.object ? this.object.formaPagoId : null
+      nombre:       this.object ? this.object.nombre : null,
+      bloqueado:    this.object ? this.object.bloqueado : null,
+      urlServicios: this.object ? this.object.urlServicios : null
     });
   }
 
@@ -88,9 +77,9 @@ export class FormComponent implements OnInit, OnDestroy {
       };
 
       if (this.data.id) {
-        this.store.dispatch(itemActions.PutAction({ id: this.object.id, object: objeto, modulo: 'acreditacion' }));
+        this.store.dispatch(itemActions.PutAction({ id: this.object.id, object: objeto, modulo: 'proveedor' }));
       } else {
-        this.store.dispatch(itemActions.PostAction({ object: objeto, modulo: 'acreditacion' }));
+        this.store.dispatch(itemActions.PostAction({ object: objeto, modulo: 'proveedor' }));
       }
 
       this.dialogRef.close();
@@ -113,6 +102,4 @@ export class FormComponent implements OnInit, OnDestroy {
     this.data.tipo = 'EDITAR';
     this.formGroup.enable();
   }
-
 }
-

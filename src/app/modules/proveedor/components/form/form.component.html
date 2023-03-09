@@ -1,0 +1,37 @@
+<h1 mat-dialog-title>
+    <span *ngIf="data.tipo == 'CREAR'">Creación de Proveedor</span>
+    <span *ngIf="data.tipo == 'EDITAR'">Edición de Proveedor</span>
+    <span *ngIf="data.tipo == 'VER'">Visualización de Proveedor</span>
+</h1>
+
+<div mat-dialog-content class="mat-typography">
+    <form #formRef="ngForm" [formGroup]="formGroup" (ngSubmit)="enviar()">
+        <div class="container-fluid p-0">
+            <div class="row">
+                <div class="col-12 my-3">
+                    <mat-slide-toggle formControlName="bloqueado" name="bloqueado">Bloqueado</mat-slide-toggle>
+                </div>
+
+                <div class="col-12">
+                    <mat-form-field>
+                        <mat-label>Nombre</mat-label>
+                        <input formControlName="nombre" name="nombre" matInput type="text" required>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-12">
+                    <mat-form-field>
+                        <mat-label>URL servicios</mat-label>
+                        <input formControlName="urlServicios" name="urlServicios" matInput type="text" required>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close>Cancelar</button>
+    <button *ngIf="data.tipo != 'VER'" (click)="guardar($event)" mat-raised-button color="primary">Guardar</button>
+    <button *ngIf="data.tipo == 'VER'" (click)="activarFormParaEdicion()" mat-raised-button color="primary">Editar</button>
+</mat-dialog-actions>

@@ -3,13 +3,16 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { map, mergeMap } from "rxjs";
 import { HttpService } from "src/app/services/http.service";
 import * as IndexActions from './index.actions';
+import * as GlobalActions from '../../global/global.actions';
+import { Store } from "@ngrx/store";
 
 @Injectable()
 export class IndexEfects {
 
     constructor(
         private actions$: Actions,
-        private httpService: HttpService
+        private httpService: HttpService,
+        private store: Store<any>
     ) { }
 
     GetItemsAction$ = createEffect(() => 
@@ -33,7 +36,13 @@ export class IndexEfects {
             ofType(IndexActions.DeleteItemsAction),
             mergeMap((action) =>
             this.httpService.Delete(action.modulo, action.ids).pipe(
-                map((res: any) => IndexActions.GetItemsPagAction({ modulo: action.modulo, cantidad: 10, pagina: 0, textBusqueda: '' }))
+                map((res: any) => {
+                    if (action.modulo == 'acreditacion') {
+                        this.store.dispatch(GlobalActions.GetSaldoAction());
+                    }
+                    
+                    return IndexActions.GetItemsPagAction({ modulo: action.modulo, cantidad: 10, pagina: 0, textBusqueda: '' });
+                })
             ))));
 
     GetCamposAction$ = createEffect(() => 
