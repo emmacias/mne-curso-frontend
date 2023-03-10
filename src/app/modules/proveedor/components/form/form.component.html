@@ -25,6 +25,45 @@
                         <input formControlName="urlServicios" name="urlServicios" matInput type="text" required>
                     </mat-form-field>
                 </div>
+
+                <div class="col-12">
+                    <table formArrayName="TelefonoContacto">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <a *ngIf="data.tipo != 'VER'" (click)="adicionarTelefono()" mat-icon-button color="primary">
+                                        <mat-icon>add_circle</mat-icon>
+                                    </a>
+                                </th>
+                                <th>Número</th>
+                                <th>Operadora</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let telDetalle of getTelefonos(); let i = index" [formGroupName]="i">
+                                <td>
+                                    <a *ngIf="data.tipo != 'VER'" (click)="eliminarTelefono(i)" mat-icon-button color="primary">
+                                        <mat-icon>delete</mat-icon>
+                                    </a>
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                        <input formControlName="numero" name="numero" matInput type="text" required>
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                        <mat-select formControlName="telefonoOperadoraId" name="telefonoOperadoraId" required>
+                                            <mat-option *ngFor="let operadora of formData?.telefonoOperadoraList" [value]="operadora.id">
+                                                {{ operadora.nombre }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </form>

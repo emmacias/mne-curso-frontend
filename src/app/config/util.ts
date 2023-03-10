@@ -1,0 +1,15 @@
+export const emailPattern    = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+export const enteroPattern   = /^-?\d+$/;
+export const enteroPositivoPattern   = /^\d+$/;
+export const enteroNegativoPattern   = /^-\d+$/;
+export const decimalPattern  = /^-?\d+(\.\d+)?$/;
+export const decimalPositivoPattern     = /^\d+(\.\d+)?$/;
+export const decimalNegativoPattern     = /^-\d+(\.\d+)?$/;
+export const direccionIPValida          = /^\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}$/;
+export const letraConEspacio            =/^[a-zA-ZáÁéÉíÍóÓúÚñÑ ]{1,100}$/;
+export const letraSinEspacio            =/^[a-zA-ZáÁéÉíÍóÓúÚñÑ]{1,100}$/;
+export const numeroTelefonoCelular      =/^(0[4-9][0-9]{8})$/;
+export const numeroTelefonoConvencional =/^(0[1-9][0-9]{7})$/;
+export const letraConEspacioNumero      =/^[a-zA-ZáÁéÉíÍóÓúÚñÑ0-9 ]{0,100}$/;
+export const letraConNumero             =/^[a-zA-ZáÁéÉíÍóÓúÚñÑ0-9]{0,100}$/;
+export const latitudLongitud            =/^-?[0-9]{1,3}(\.\d+)?$/;

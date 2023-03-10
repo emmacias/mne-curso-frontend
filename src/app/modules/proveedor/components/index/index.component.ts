@@ -72,7 +72,7 @@ export class IndexComponent  implements OnInit, OnDestroy {
       autoFocus: true,
       closeOnNavigation: false,
       position: { top: '30px' },
-      width: '400px',
+      width: '700px',
       data: {
         tipo: 'VER',
         id: itemId
@@ -86,7 +86,7 @@ export class IndexComponent  implements OnInit, OnDestroy {
       autoFocus: true,
       closeOnNavigation: false,
       position: { top: '30px' },
-      width: '400px',
+      width: '700px',
       data: {
         tipo: 'CREAR'
       }
